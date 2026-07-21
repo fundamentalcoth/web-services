@@ -28,6 +28,7 @@ export interface SiteConfig {
   lineUrl: string;
   lineDisplay: string;
   telephone: string;
+  telephoneDisplay: string;
   email: string;
   /** Postal address — must match GBP exactly for entity matching. */
   address: {
@@ -93,6 +94,7 @@ export const SITE: SiteConfig = {
 
   // NAP — ควรตรงกับ Google Business Profile ทุกตัวอักษร (postalCode 10250 = แขวงทับช้าง เขตสะพานสูง; โปรดยืนยันให้ตรง GBP)
   telephone: '+66818890911',
+  telephoneDisplay: '081-889-0911',
   email: '', // e.g. 'hello@fundamental.co.th'
   address: {
     streetAddress: 'บ้านกลางเมือง กรุงเทพกรีฑา',
