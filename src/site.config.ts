@@ -58,7 +58,7 @@ export const PLACEHOLDER_LINE = 'https://line.me/R/ti/p/@REPLACE_WITH_LINE_OA_ID
 
 export const SITE: SiteConfig = {
   brandName: 'FUNDAMENTAL',
-  legalName: 'Fundamental',
+  legalName: 'Fundamental Co., Ltd.',
   url: 'https://fundamental.co.th',
   lang: 'th',
   locale: 'th_TH',
@@ -107,7 +107,8 @@ export const SITE: SiteConfig = {
   areaServed: ['กรุงเทพกรีฑา', 'รามคำแหง', 'ลาดกระบัง', 'สุวรรณภูมิ', 'สมุทรปราการ'],
 
   openingHours: [
-    // e.g. { days: ['Mo','Tu','We','Th','Fr'], opens: '09:00', closes: '18:00' }
+    // จ–ศ 10:00–18:00 (ส–อา ปิด) — ตรงกับ Google Business Profile
+    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '10:00', closes: '18:00' },
   ],
   priceRange: '฿฿',
 
