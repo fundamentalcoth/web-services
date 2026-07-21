@@ -63,28 +63,33 @@ export const SITE: SiteConfig = {
   lang: 'th',
   locale: 'th_TH',
 
-  // ── On-page SEO copy (keyword-anchored, promise-frame compliant) ──
-  title: 'รับทำเว็บ + ระบบ LINE ให้ธุรกิจถูกค้นหาเจอ | Fundamental',
+  // ── On-page SEO copy (local-first, keyword-anchored, promise-frame compliant) ──
+  title: 'รับทำเว็บ + ระบบ LINE ย่านกรุงเทพกรีฑา–รามคำแหง–ลาดกระบัง | Fundamental',
   description:
-    'รับทำเว็บธุรกิจโหลดเร็ว เปิดบนมือถือสวย พร้อมวางระบบผ่าน LINE — จองคิว ติดตามงาน แจ้งเตือน ' +
-    'ช่วยให้ลูกค้าในพื้นที่ค้นหาเจอธุรกิจคุณง่ายขึ้น และไม่พลาดทุกโอกาสที่เข้ามา ปรึกษาผ่าน LINE ได้ทันที',
+    'รับทำเว็บธุรกิจ + วางระบบผ่าน LINE (จองคิว ติดตามงาน แจ้งเตือน) สำหรับธุรกิจย่านกรุงเทพกรีฑา ' +
+    'รามคำแหง ลาดกระบัง สุวรรณภูมิ และสมุทรปราการ — ช่วยให้ลูกค้าในพื้นที่ค้นหาเจอธุรกิจคุณง่ายขึ้น ' +
+    'และไม่พลาดทุกโอกาสที่เข้ามา ปรึกษาผ่าน LINE ได้ทันที',
 
   keywords: [
     'รับทำเว็บ',
-    'รับทำเว็บไซต์',
-    'เว็บธุรกิจ',
+    'รับทำเว็บ กรุงเทพกรีฑา',
+    'รับทำเว็บ รามคำแหง',
+    'รับทำเว็บ ลาดกระบัง',
+    'รับทำเว็บ สมุทรปราการ',
     'รับทำเว็บธุรกิจ',
+    'เว็บธุรกิจ',
     'ทำเว็บให้ลูกค้าหาเจอ',
     'ระบบ LINE',
     'ระบบจองคิวผ่าน LINE',
     'ระบบติดตามผ่าน LINE',
     'ระบบแจ้งเตือนผ่าน LINE',
+    'ธุรกิจย่านกรุงเทพกรีฑา',
     'ธุรกิจในพื้นที่',
   ],
 
-  // ── Contact / LINE ──  ▶ FILL BEFORE LAUNCH: real LINE OA link
-  lineUrl: PLACEHOLDER_LINE,
-  lineDisplay: '@fundamental', // ▶ FILL BEFORE LAUNCH: real LINE OA id
+  // ── Contact / LINE ──
+  lineUrl: 'https://line.me/R/ti/p/@291snlia',
+  lineDisplay: '@291snlia',
 
   // ▶ FILL BEFORE LAUNCH — must match your Google Business Profile (NAP)
   telephone: '', // e.g. '+66-8x-xxx-xxxx' (leave '' to omit from schema)
@@ -98,8 +103,8 @@ export const SITE: SiteConfig = {
   },
   geo: null, // e.g. { latitude: '13.7563', longitude: '100.5018' }
 
-  // Default: national coverage. Set the target จังหวัด/ย่าน once locked.
-  areaServed: ['ประเทศไทย'],
+  // Target service area (โซนเดียวกับเคส dogsanook — กรุงเทพฝั่งตะวันออก + สมุทรปราการ).
+  areaServed: ['กรุงเทพกรีฑา', 'รามคำแหง', 'ลาดกระบัง', 'สุวรรณภูมิ', 'สมุทรปราการ'],
 
   openingHours: [
     // e.g. { days: ['Mo','Tu','We','Th','Fr'], opens: '09:00', closes: '18:00' }
