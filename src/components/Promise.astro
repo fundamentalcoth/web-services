@@ -1,0 +1,49 @@
+---
+const items = [
+  { k: '01 / SPEED', t: 'เว็บโหลดเร็ว', d: 'เปิดไว ไม่ต้องรอนาน ลูกค้าไม่หนีไปไหน' },
+  { k: '02 / MOBILE', t: 'เปิดในมือถือสวย', d: 'อ่านง่ายทุกจอ เพราะลูกค้าส่วนใหญ่ดูบนมือถือ' },
+  { k: '03 / LINE', t: 'ทักไลน์คลิกเดียว', d: 'ลูกค้าติดต่อได้ทันที ไม่มีขั้นตอนให้หลุด' },
+  { k: '04 / DATA', t: 'ข้อมูลครบถูกต้อง', d: 'ที่อยู่ เวลาเปิด บริการ ครบถ้วนตรงความจริง' },
+];
+---
+<section style="border-bottom:1px solid var(--color-divider);">
+  <div class="container" style="padding-block:clamp(52px,7vw,88px);">
+    <div
+      style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px;"
+    >
+      <h2 style="font-size:clamp(24px,3vw,34px);line-height:1.2;margin:0;">
+        สิ่งที่เราสัญญาได้ — เพราะเราคุมเองได้
+      </h2>
+      <p
+        style="font-family:var(--font-body);font-size:12px;color:color-mix(in srgb,var(--color-text) 50%,transparent);max-width:34ch;margin:0;"
+      >
+        เรื่องการถูกค้นหา เราดูแลกระบวนการอย่างโปร่งใส แต่ไม่รับปากอันดับ เพราะขึ้นกับปัจจัยที่ควบคุมไม่ได้
+      </p>
+    </div>
+
+    <div class="blueprint" style="background:var(--color-bg);">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+        class="corner br"
+      ></i>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));">
+        {
+          items.map((it, i) => (
+            <div
+              style={`padding:clamp(20px,2.2vw,28px);border-bottom:1px solid var(--color-divider);${
+                (i + 1) % 4 !== 0 ? 'border-right:1px solid var(--color-divider);' : ''
+              }`}
+            >
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:13px;letter-spacing:0.08em;color:var(--color-accent-700);margin-bottom:8px;">
+                {it.k}
+              </div>
+              <div style="font-size:16px;font-weight:600;margin-bottom:4px;">{it.t}</div>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 66%,transparent);">
+                {it.d}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

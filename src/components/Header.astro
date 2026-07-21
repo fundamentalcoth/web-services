@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import { SITE } from '../site.config.ts';
+import logo from '../assets/fundamental-logo.png';
+---
+<header
+  style="position:sticky;top:0;z-index:20;background:var(--color-bg);border-bottom:1px solid var(--color-divider);"
+>
+  <div
+    class="container"
+    style="display:flex;align-items:center;gap:24px;padding-block:12px;"
+  >
+    <a
+      href="#top"
+      aria-label={`${SITE.brandName} — กลับสู่ด้านบน`}
+      style="display:flex;align-items:center;gap:10px;margin-right:auto;color:var(--color-text);"
+    >
+      <Image
+        src={logo}
+        alt="โลโก้ Fundamental"
+        width={30}
+        height={30}
+        loading="eager"
+        style="height:30px;width:auto;display:block;"
+      />
+      <span
+        style="font-family:var(--font-heading);font-weight:600;font-size:21px;letter-spacing:0.06em;"
+        >{SITE.brandName}</span
+      >
+    </a>
+    <nav aria-label="เมนูหลัก" style="display:flex;align-items:center;gap:22px;">
+      <a
+        href="#proof"
+        style="font-size:13.5px;color:color-mix(in srgb,var(--color-text) 72%,transparent);"
+        >ผลงานจริง</a
+      >
+      <a
+        href="#systems"
+        style="font-size:13.5px;color:color-mix(in srgb,var(--color-text) 72%,transparent);"
+        >ระบบ LINE</a
+      >
+      <a
+        href={SITE.lineUrl}
+        class="btn btn-primary"
+        style="font-size:14px;padding:9px 18px;"
+        rel="noopener"
+        >ทักไลน์</a
+      >
+    </nav>
+  </div>
+</header>

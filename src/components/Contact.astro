@@ -1,0 +1,38 @@
+---
+import { SITE } from '../site.config.ts';
+---
+<section id="contact" style="background:var(--color-accent-900);color:var(--color-bg);">
+  <div
+    class="container"
+    style="padding-block:clamp(60px,9vw,120px);text-align:center;"
+  >
+    <p
+      style="font-family:var(--font-body);font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:color-mix(in srgb,var(--color-bg) 65%,transparent);margin:0 0 20px;"
+    >
+      พร้อมเริ่มเมื่อไหร่ ทักได้เลย
+    </p>
+    <h2
+      style="font-size:clamp(30px,5vw,52px);line-height:1.16;margin:0 auto 22px;max-width:20ch;color:var(--color-bg);"
+    >
+      ให้ธุรกิจคุณถูกเจอ<br />และไม่พลาดทุกโอกาส
+    </h2>
+    <p
+      style="font-size:17px;line-height:1.7;max-width:46ch;margin:0 auto 36px;color:color-mix(in srgb,var(--color-bg) 78%,transparent);"
+    >
+      คุยกับเราก่อนได้ ไม่มีข้อผูกมัด เล่าเรื่องธุรกิจของคุณมา แล้วเราจะบอกว่าทำอะไรให้ได้บ้าง
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+      <a
+        href={SITE.lineUrl}
+        rel="noopener"
+        style="display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-heading);font-weight:600;font-size:16px;background:var(--color-bg);color:var(--color-accent-900);padding:15px 30px;border:1px solid var(--color-bg);"
+        >ทักไลน์ปรึกษาได้ทันที</a
+      >
+    </div>
+    <p
+      style="font-family:var(--font-body);font-size:13px;letter-spacing:0.02em;margin:18px 0 0;color:color-mix(in srgb,var(--color-bg) 60%,transparent);"
+    >
+      LINE ID: <a href={SITE.lineUrl} rel="noopener" style="color:var(--color-bg);font-weight:600;">{SITE.lineDisplay}</a>
+    </p>
+  </div>
+</section>

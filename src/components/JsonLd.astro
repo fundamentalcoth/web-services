@@ -1,0 +1,104 @@
+---
+/**
+ * JsonLd.astro — structured data for GBP entity matching.
+ *
+ * Emits a @graph with:
+ *  - ProfessionalService (a LocalBusiness subtype) describing Fundamental
+ *  - WebSite
+ * Empty / placeholder values are stripped so we never emit invalid schema.
+ * Fill the real NAP + GBP link in src/site.config.ts to complete the entity.
+ */
+import { SITE, isPlaceholderLine } from '../site.config.ts';
+
+const org = '#fundamental';
+const website = '#website';
+
+// Build address only if at least one field is set.
+const addr = SITE.address;
+const hasAddress = Boolean(
+  addr.streetAddress || addr.addressLocality || addr.addressRegion || addr.postalCode
+);
+const postalAddress = hasAddress
+  ? {
+      '@type': 'PostalAddress',
+      ...(addr.streetAddress ? { streetAddress: addr.streetAddress } : {}),
+      ...(addr.addressLocality ? { addressLocality: addr.addressLocality } : {}),
+      ...(addr.addressRegion ? { addressRegion: addr.addressRegion } : {}),
+      ...(addr.postalCode ? { postalCode: addr.postalCode } : {}),
+      addressCountry: addr.addressCountry || 'TH',
+    }
+  : undefined;
+
+const geo = SITE.geo
+  ? { '@type': 'GeoCoordinates', latitude: SITE.geo.latitude, longitude: SITE.geo.longitude }
+  : undefined;
+
+const openingHours =
+  SITE.openingHours.length > 0
+    ? SITE.openingHours.map((h) => ({
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: h.days,
+        opens: h.opens,
+        closes: h.closes,
+      }))
+    : undefined;
+
+// contactPoint: LINE is the primary channel. Only emit when it's real.
+const contactPoints = [];
+if (!isPlaceholderLine(SITE.lineUrl)) {
+  contactPoints.push({
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    url: SITE.lineUrl,
+    availableLanguage: ['th'],
+  });
+}
+if (SITE.telephone) {
+  contactPoints.push({
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    telephone: SITE.telephone,
+    availableLanguage: ['th'],
+  });
+}
+
+// sameAs: real GBP/social links + the LINE link when it's real.
+const sameAs = [...SITE.sameAs];
+if (!isPlaceholderLine(SITE.lineUrl)) sameAs.push(SITE.lineUrl);
+
+const professionalService: Record<string, unknown> = {
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}/${org}`,
+  name: SITE.legalName,
+  alternateName: SITE.brandName,
+  url: SITE.url,
+  logo: `${SITE.url}/logo.png`,
+  image: `${SITE.url}/logo.png`,
+  description: SITE.description,
+  areaServed: SITE.areaServed.map((name) => ({ '@type': 'AdministrativeArea', name })),
+  knowsAbout: SITE.keywords,
+  priceRange: SITE.priceRange,
+  ...(postalAddress ? { address: postalAddress } : {}),
+  ...(geo ? { geo } : {}),
+  ...(openingHours ? { openingHoursSpecification: openingHours } : {}),
+  ...(SITE.telephone ? { telephone: SITE.telephone } : {}),
+  ...(SITE.email ? { email: SITE.email } : {}),
+  ...(contactPoints.length ? { contactPoint: contactPoints } : {}),
+  ...(sameAs.length ? { sameAs } : {}),
+};
+
+const webSite = {
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/${website}`,
+  url: SITE.url,
+  name: SITE.legalName,
+  inLanguage: SITE.lang,
+  publisher: { '@id': `${SITE.url}/${org}` },
+};
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [professionalService, webSite],
+};
+---
+<script type="application/ld+json" is:inline set:html={JSON.stringify(graph)} />

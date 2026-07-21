@@ -1,0 +1,76 @@
+---
+/**
+ * BaseLayout.astro — document shell + all <head> SEO.
+ * lang="th", one canonical, Open Graph + Twitter, JSON-LD, font preconnect.
+ */
+import { SITE } from '../site.config.ts';
+import JsonLd from '../components/JsonLd.astro';
+import '../styles/tokens.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = SITE.title, description = SITE.description } = Astro.props;
+
+// Canonical + absolute OG URLs derived from configured `site`.
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImage = new URL(SITE.ogImage, SITE.url).href;
+const keywords = SITE.keywords.join(', ');
+
+const fontsHref =
+  'https://fonts.googleapis.com/css2?' +
+  'family=Barlow:wght@400;500;700&' +
+  'family=Barlow+Condensed:wght@400;600&' +
+  'family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap';
+---
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#153638" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content={SITE.legalName} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.legalName} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Fonts: preconnect + swap (Latin: Barlow / Barlow Condensed; Thai: IBM Plex Sans Thai) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fontsHref} />
+
+    <!-- Structured data (ProfessionalService/LocalBusiness for GBP) -->
+    <JsonLd />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
