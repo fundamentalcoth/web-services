@@ -112,11 +112,10 @@ export const SITE: SiteConfig = {
   ],
   priceRange: '฿฿',
 
-  // ▶ FILL BEFORE LAUNCH — add your Google Business Profile / Maps URL first;
-  // this is the link that ties the site to your GBP entity.
+  // Google Business Profile link — ties this site to the GBP entity (+ LINE is
+  // appended automatically in JsonLd.astro). Add socials (Facebook/IG) here too.
   sameAs: [
-    // 'https://www.google.com/maps/place/?q=place_id:YOUR_PLACE_ID',
-    // 'https://www.facebook.com/yourpage',
+    'https://g.page/r/CXYbNr_NfV8AEBM',
   ],
 
   ogImage: '/og-image.png',
