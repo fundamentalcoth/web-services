@@ -91,14 +91,14 @@ export const SITE: SiteConfig = {
   lineUrl: 'https://line.me/R/ti/p/@291snlia',
   lineDisplay: '@291snlia',
 
-  // ▶ FILL BEFORE LAUNCH — must match your Google Business Profile (NAP)
-  telephone: '', // e.g. '+66-8x-xxx-xxxx' (leave '' to omit from schema)
+  // NAP — ควรตรงกับ Google Business Profile ทุกตัวอักษร (postalCode 10250 = แขวงทับช้าง เขตสะพานสูง; โปรดยืนยันให้ตรง GBP)
+  telephone: '+66818890911',
   email: '', // e.g. 'hello@fundamental.co.th'
   address: {
-    streetAddress: '',
-    addressLocality: '', // อำเภอ/เขต
-    addressRegion: '', // จังหวัด
-    postalCode: '',
+    streetAddress: 'บ้านกลางเมือง กรุงเทพกรีฑา',
+    addressLocality: 'แขวงทับช้าง เขตสะพานสูง', // อำเภอ/เขต
+    addressRegion: 'กรุงเทพมหานคร', // จังหวัด
+    postalCode: '10250',
     addressCountry: 'TH',
   },
   geo: null, // e.g. { latitude: '13.7563', longitude: '100.5018' }
