@@ -51,6 +51,8 @@ export interface SiteConfig {
    */
   sameAs: string[];
   ogImage: string;
+  /** Blog author entity — a real person strengthens E-E-A-T. */
+  author: { name: string; url: string; credential: string };
 }
 
 // ── PLACEHOLDER SENTINEL ──────────────────────────────────────────────
@@ -121,6 +123,13 @@ export const SITE: SiteConfig = {
   ],
 
   ogImage: '/og-image.png',
+
+  // ▶ ปรับชื่อที่จะแสดงได้ (ไทย/อังกฤษ) — url ชี้ blog ส่วนตัวเพื่อ E-E-A-T
+  author: {
+    name: 'Chaivoot',
+    url: 'https://chaivoot.com',
+    credential: 'Local Guide ระดับ 7 ใน Google Maps · เขียนเรื่อง local business ที่ chaivoot.com',
+  },
 };
 
 /** Convenience: is a value still an unfilled placeholder? */

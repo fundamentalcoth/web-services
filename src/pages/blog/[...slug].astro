@@ -1,0 +1,129 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeaderMini from '../../components/SiteHeaderMini.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE } from '../../site.config.ts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, pubDate, updatedDate, videoUrl, tags } = post.data;
+
+const TH_MONTHS = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+const fmt = (d: Date) => `${d.getDate()} ${TH_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+
+const pageUrl = new URL(`/blog/${post.id}/`, SITE.url).href;
+const image = new URL(SITE.ogImage, SITE.url).href;
+
+function ytEmbed(u?: string): string | null {
+  if (!u) return null;
+  const m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+  return m ? `https://www.youtube.com/embed/${m[1]}` : null;
+}
+const embed = ytEmbed(videoUrl);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  image,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  inLanguage: 'th',
+  mainEntityOfPage: pageUrl,
+  author: {
+    '@type': 'Person',
+    name: SITE.author.name,
+    url: SITE.author.url,
+    description: SITE.author.credential,
+    sameAs: [SITE.author.url],
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.legalName,
+    logo: { '@type': 'ImageObject', url: new URL('/logo.png', SITE.url).href },
+  },
+  ...(tags.length ? { keywords: tags.join(', ') } : {}),
+};
+---
+<BaseLayout title={`${title} | Fundamental`} description={description}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  <SiteHeaderMini backHref="/blog" backLabel="← บทความทั้งหมด" />
+
+  <main class="container" style="max-width:720px;padding-block:clamp(36px,5vw,64px);">
+    <article>
+      <h1 style="font-size:clamp(27px,4vw,40px);line-height:1.2;margin:0 0 14px;">{title}</h1>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 clamp(28px,4vw,40px);font-family:var(--font-body);font-size:13px;color:color-mix(in srgb,var(--color-text) 60%,transparent);">
+        <span>โดย <a href={SITE.author.url} rel="author noopener" style="color:var(--color-accent-700);font-weight:600;">{SITE.author.name}</a></span>
+        <span style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--color-divider);padding:2px 9px;color:var(--color-accent-700);">
+          <span style="width:5px;height:5px;background:var(--color-accent);display:inline-block;"></span>
+          Local Guide ระดับ 7
+        </span>
+        <time datetime={pubDate.toISOString()}>{fmt(pubDate)}</time>
+      </div>
+
+      {embed && (
+        <div style="position:relative;width:100%;aspect-ratio:16/9;margin:0 0 clamp(24px,4vw,32px);border:1px solid var(--color-divider);">
+          <iframe
+            src={embed}
+            title={title}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="position:absolute;inset:0;width:100%;height:100%;border:0;"
+          ></iframe>
+        </div>
+      )}
+
+      <div class="prose"><Content /></div>
+
+      {tags.length > 0 && (
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(28px,4vw,40px);">
+          {tags.map((t) => (
+            <span style="font-family:var(--font-body);font-size:12px;border:1px solid var(--color-divider);padding:3px 10px;color:color-mix(in srgb,var(--color-text) 60%,transparent);">
+              {t}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <!-- Author bio (E-E-A-T) -->
+      <aside class="blueprint" style="margin-top:clamp(36px,5vw,52px);padding:clamp(20px,3vw,28px);background:var(--color-bg);">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <p style="font-family:var(--font-heading);font-weight:600;font-size:18px;margin:0 0 6px;">{SITE.author.name}</p>
+        <p style="font-size:14px;line-height:1.65;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0 0 10px;">
+          {SITE.author.credential}
+        </p>
+        <a href={SITE.author.url} rel="noopener" style="font-size:14px;color:var(--color-accent-700);font-weight:600;">
+          อ่านมุมมองส่วนตัวจากประสบการณ์จริง ที่ chaivoot.com →
+        </a>
+      </aside>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  .prose h2 { font-size: clamp(20px, 2.8vw, 26px); line-height: 1.3; margin: clamp(30px, 4vw, 40px) 0 12px; }
+  .prose h3 { font-size: 18px; margin: 22px 0 8px; }
+  .prose p { font-size: 16px; line-height: 1.8; margin: 0 0 14px; color: color-mix(in srgb, var(--color-text) 86%, transparent); }
+  .prose ul, .prose ol { margin: 0 0 16px; padding-left: 24px; }
+  .prose li { font-size: 16px; line-height: 1.75; margin-bottom: 8px; color: color-mix(in srgb, var(--color-text) 86%, transparent); }
+  .prose a { color: var(--color-accent-700); text-underline-offset: 3px; text-decoration: underline; }
+  .prose a:hover { color: var(--color-accent-900); }
+  .prose strong { font-weight: 700; color: var(--color-text); }
+  .prose blockquote {
+    margin: 18px 0; padding: 12px 18px; border-left: 3px solid var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+    font-size: 14.5px; line-height: 1.7; color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  }
+  .prose blockquote p { margin: 0; font-size: 14.5px; }
+</style>
