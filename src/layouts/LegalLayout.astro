@@ -1,0 +1,63 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import { SITE } from '../site.config.ts';
+import logo from '../assets/fundamental-logo.png';
+
+interface Props {
+  title: string;
+  description?: string;
+  heading: string;
+  updated: string;
+}
+const { title, description, heading, updated } = Astro.props;
+---
+<BaseLayout title={title} description={description}>
+  <header
+    style="position:sticky;top:0;z-index:20;background:var(--color-bg);border-bottom:1px solid var(--color-divider);"
+  >
+    <div class="container" style="display:flex;align-items:center;gap:10px;padding-block:12px;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;color:var(--color-text);">
+        <Image src={logo} alt="โลโก้ Fundamental" width={30} height={30} loading="eager" style="height:30px;width:auto;display:block;" />
+        <span style="font-family:var(--font-heading);font-weight:600;font-size:21px;letter-spacing:0.06em;">{SITE.brandName}</span>
+      </a>
+      <a href="/" style="margin-left:auto;font-size:13.5px;color:var(--color-accent-700);">&larr; กลับหน้าแรก</a>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:760px;padding-block:clamp(40px,6vw,72px);">
+    <h1 style="font-size:clamp(28px,4vw,40px);line-height:1.2;margin:0 0 10px;">{heading}</h1>
+    <p style="font-size:13px;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin:0 0 clamp(28px,4vw,40px);">
+      อัปเดตล่าสุด: {updated}
+    </p>
+    <div class="legal"><slot /></div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  .legal h2 {
+    font-size: clamp(19px, 2.6vw, 24px);
+    line-height: 1.3;
+    margin: clamp(28px, 4vw, 38px) 0 10px;
+  }
+  .legal h3 { font-size: 17px; margin: 20px 0 6px; }
+  .legal p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    margin: 0 0 12px;
+    color: color-mix(in srgb, var(--color-text) 84%, transparent);
+  }
+  .legal ul { margin: 0 0 14px; padding-left: 22px; }
+  .legal li {
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin-bottom: 6px;
+    color: color-mix(in srgb, var(--color-text) 84%, transparent);
+  }
+  .legal a { color: var(--color-accent-700); text-underline-offset: 3px; }
+  .legal a:hover { color: var(--color-accent-900); text-decoration: underline; }
+  .legal strong { font-weight: 700; color: var(--color-text); }
+</style>
