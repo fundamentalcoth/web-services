@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeaderMini from '../../components/SiteHeaderMini.astro';
+import Footer from '../../components/Footer.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+const TH_MONTHS = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+const fmt = (d: Date) => `${d.getDate()} ${TH_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+---
+<BaseLayout
+  title="บทความ — ความรู้ Local Business | Fundamental"
+  description="เทคนิคและความรู้เรื่องการทำ local business ให้ธุรกิจถูกค้นหาเจอบน Google — Google Maps, Business Profile, รีวิว และระบบ LINE"
+>
+  <SiteHeaderMini />
+  <main class="container" style="max-width:760px;padding-block:clamp(40px,6vw,72px);">
+    <p style="font-family:var(--font-body);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent-700);margin:0 0 12px;">
+      คลังความรู้ / Local Business
+    </p>
+    <h1 style="font-size:clamp(30px,4.4vw,44px);line-height:1.15;margin:0 0 14px;">บทความ</h1>
+    <p style="font-size:16px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 78%,transparent);margin:0 0 clamp(32px,5vw,48px);max-width:56ch;">
+      เทคนิคและความรู้เรื่องการทำธุรกิจ local ให้ถูกค้นหาเจอบนออนไลน์ — อัปเดตจากประสบการณ์จริง
+    </p>
+
+    {
+      posts.length === 0 ? (
+        <p style="color:color-mix(in srgb,var(--color-text) 55%,transparent);">เร็วๆ นี้</p>
+      ) : (
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;">
+          {posts.map((post) => (
+            <li style="border-top:1px solid var(--color-divider);">
+              <a
+                href={`/blog/${post.id}/`}
+                style="display:block;padding:22px 0;color:var(--color-text);"
+              >
+                <time
+                  datetime={post.data.pubDate.toISOString()}
+                  style="font-family:var(--font-body);font-size:12.5px;color:color-mix(in srgb,var(--color-text) 50%,transparent);"
+                >
+                  {fmt(post.data.pubDate)}
+                </time>
+                <h2 style="font-size:clamp(20px,2.6vw,25px);line-height:1.3;margin:6px 0 8px;">
+                  {post.data.title}
+                </h2>
+                <p style="font-size:15px;line-height:1.65;color:color-mix(in srgb,var(--color-text) 74%,transparent);margin:0;">
+                  {post.data.description}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </main>
+  <Footer />
+</BaseLayout>
