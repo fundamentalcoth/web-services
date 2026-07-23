@@ -51,6 +51,8 @@ export interface SiteConfig {
    */
   sameAs: string[];
   ogImage: string;
+  /** Google Analytics 4 Measurement ID (leave '' to disable). */
+  gaId: string;
   /** Blog author entity — a real person strengthens E-E-A-T. */
   author: { name: string; url: string; credential: string };
 }
@@ -123,6 +125,7 @@ export const SITE: SiteConfig = {
   ],
 
   ogImage: '/og-image.png',
+  gaId: 'G-WCRQS1H59Q',
 
   // ▶ ปรับชื่อที่จะแสดงได้ (ไทย/อังกฤษ) — url ชี้ blog ส่วนตัวเพื่อ E-E-A-T
   author: {
