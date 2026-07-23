@@ -69,6 +69,18 @@ const fontsHref =
     <JsonLd />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {
+      SITE.gaId && (
+        <>
+          <script async is:inline src={`https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}`} />
+          <script
+            is:inline
+            set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${SITE.gaId}');`}
+          />
+        </>
+      )
+    }
   </head>
   <body>
     <slot />
